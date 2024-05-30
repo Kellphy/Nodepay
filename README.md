@@ -1,3 +1,5 @@
+https://hub.docker.com/r/kellphy/nodepay
+---
 Use built image:
 ```
 services:
