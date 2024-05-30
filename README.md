@@ -14,7 +14,7 @@ Or, build it yourself:
 ```
 services:
   nodepay:
-    container_name: PR-Nodepay
+    container_name: Nodepay
     image: nodepay
     restart: unless-stopped
     build:
