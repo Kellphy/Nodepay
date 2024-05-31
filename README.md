@@ -1,6 +1,8 @@
-Contact: https://kellphy.com/socials
+### Contact: https://kellphy.com/socials
+### But before, check the status of Nodepay: https://app.nodepay.ai/dashboard
 ---
-## Docker Run
+## Usage
+### Docker Run
 ```
 docker run -d \
   --name Nodepay \
@@ -9,7 +11,7 @@ docker run -d \
   -e NP_PASS=YOURPASSWORD \
   kellphy/nodepay
 ```
-## Docker Compose
+### Docker Compose
 Use built image from Docker Hub: https://hub.docker.com/r/kellphy/nodepay
 ```
 services:
