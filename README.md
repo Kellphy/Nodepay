@@ -11,8 +11,8 @@ services:
     image: kellphy/nodepay
     restart: unless-stopped
     environment:
-      - NP_USER="YOUR@EMAIL.COM"
-      - NP_PASS="YOURPASSWORD"
+      - NP_USER=YOUR@EMAIL.COM
+      - NP_PASS=YOURPASSWORD
 ```
 #### Docker Run
 ```
@@ -35,8 +35,8 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      - NP_USER="YOUR@EMAIL.COM"
-      - NP_PASS="YOURPASSWORD"
+      - NP_USER=YOUR@EMAIL.COM
+      - NP_PASS=YOURPASSWORD
 ```
 #### Docker Run
 ```

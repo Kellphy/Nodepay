@@ -52,6 +52,8 @@ def run():
     extension_id = os.getenv('EXTENSION_ID')
     extension_url = os.getenv('EXTENSION_URL')
 
+    logging.info(f"Using the account of: {email}")
+
     # Check if credentials are provided
     if not email or not password:
         logging.error('No username or password provided. Please set the NP_USER and NP_PASS environment variables.')
@@ -122,6 +124,7 @@ def run():
         connection_status(driver)
     except Exception as e:
         logging.error(f'An error occurred: {e}')
+        logging.error(f'Restarting in 60 seconds ...')
         driver.quit()
         time.sleep(60)
         run()
