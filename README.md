@@ -36,4 +36,3 @@ services:
       - NP_USER=YOUR@EMAIL.COM
       - NP_PASS=YOURPASSWORD
 ```
----
