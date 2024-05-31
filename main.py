@@ -11,6 +11,14 @@ import logging
 def setup_logging():
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+def connection_status(driver):
+    if(wait_for_element_exists(driver,By.XPATH,"//*[text()='Connected']")):
+        logging.info("Status: Connected!")
+    elif(wait_for_element_exists(driver,By.XPATH,"//*[text()='Disconnected']")):
+        logging.warning("Status: Disonnected!")
+    else:
+        logging.warning("Status: Unknown!")
+
 def check_active_element(driver):
     try:
         wait_for_element(driver,By.XPATH,"//*[text()='Activated']")
@@ -19,9 +27,14 @@ def check_active_element(driver):
     except NoSuchElementException:
         logging.error("Failed to find 'Activated' element. Extension activation failed.")
 
+def wait_for_element_exists(driver, by, value, timeout=10):
+    try:
+        WebDriverWait(driver, timeout).until(EC.presence_of_element_located((by, value)))
+        return True
+    except TimeoutException as e:
+        return False
 
 def wait_for_element(driver, by, value, timeout=10):
-    """Waits for an element to be present on the page."""
     try:
         element = WebDriverWait(driver, timeout).until(EC.presence_of_element_located((by, value)))
         return element
@@ -87,20 +100,12 @@ def run():
         driver.get(f'chrome-extension://{extension_id}/index.html')
         
         # Refresh until the "Login" button disappears
-        while True:
-            try:
-                # Click the "Login" button
-                wait_for_element(driver,By.XPATH,"//*[text()='Login']")
-                logging.info('Clicking the extension login button...')
-                login = driver.find_element(By.XPATH, "//*[text()='Login']")
-                login.click()
-                
-                # Refresh the page
-                driver.refresh()
-                wait_for_element(driver,By.XPATH,"//*[text()='Login']")
-            except (TimeoutException, NoSuchElementException) as e:
-                # "Login" button not found, break out of the loop
-                break
+        while wait_for_element_exists(driver,By.XPATH,"//*[text()='Login']"):
+            logging.info('Clicking the extension login button...')
+            login = driver.find_element(By.XPATH, "//*[text()='Login']")
+            login.click()
+            # Refresh the page
+            driver.refresh()
         
         # Check for the "Activated" element
         check_active_element(driver)
@@ -120,7 +125,7 @@ def run():
         # Switch back to the active window
         driver.switch_to.window(active_window)
 
-        logging.info('Earning...')
+        connection_status(driver)
     except Exception as e:
         logging.error(f'An error occurred: {e}')
         driver.quit()
@@ -131,7 +136,7 @@ def run():
         try:
             time.sleep(600)
             driver.refresh()
-            check_active_element(driver)
+            connection_status(driver)
         except KeyboardInterrupt:
             logging.info('Stopping the script...')
             driver.quit()

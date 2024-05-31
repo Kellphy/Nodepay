@@ -2,17 +2,8 @@
 ### But before, check the status of Nodepay: https://app.nodepay.ai/dashboard
 ---
 ## Usage
-### Docker Run
-```
-docker run -d \
-  --name Nodepay \
-  --restart unless-stopped \
-  -e NP_USER=YOUR@EMAIL.COM \
-  -e NP_PASS=YOURPASSWORD \
-  kellphy/nodepay
-```
-### Docker Compose
-Use built image from Docker Hub: https://hub.docker.com/r/kellphy/nodepay
+### Use built image from Docker Hub: https://hub.docker.com/r/kellphy/nodepay
+#### Docker Compose
 ```
 services:
   nodepay:
@@ -20,11 +11,20 @@ services:
     image: kellphy/nodepay
     restart: unless-stopped
     environment:
-      - NP_USER=YOUR@EMAIL.COM
-      - NP_PASS=YOURPASSWORD
+      - NP_USER="YOUR@EMAIL.COM"
+      - NP_PASS="YOURPASSWORD"
 ```
-
-Or, build it yourself from GitHub: https://github.com/Kellphy/Nodepay
+#### Docker Run
+```
+docker run -d \
+  --name Nodepay \
+  --restart unless-stopped \
+  -e NP_USER="YOUR@EMAIL.COM" \
+  -e NP_PASS="YOURPASSWORD" \
+  kellphy/nodepay
+```
+### Build it yourself from GitHub: https://github.com/Kellphy/Nodepay
+#### Docker Compose
 ```
 services:
   nodepay:
@@ -35,6 +35,16 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      - NP_USER=YOUR@EMAIL.COM
-      - NP_PASS=YOURPASSWORD
+      - NP_USER="YOUR@EMAIL.COM"
+      - NP_PASS="YOURPASSWORD"
+```
+#### Docker Run
+```
+docker build -t nodepay . && \
+docker run -d \
+  --name Nodepay \
+  --restart unless-stopped \
+  -e NP_USER="YOUR@EMAIL.COM" \
+  -e NP_PASS="YOURPASSWORD" \
+  nodepay
 ```
