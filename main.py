@@ -40,6 +40,7 @@ def wait_for_element(driver, by, value, timeout=10):
         return element
     except TimeoutException as e:
         logging.error(f"Error waiting for element {value}: {e}")
+        raise
 
 def run():
     setup_logging()
@@ -85,14 +86,7 @@ def run():
         submit.click()
         
         # Check successful login
-        
-        try:
-            wait_for_element(driver,By.XPATH,"//*[text()='Dashboard']")
-            driver.find_element(By.XPATH, "//*[text()='Dashboard']")
-        except NoSuchElementException:
-            logging.error("Failed to find 'Dashbaord' element.")
-            logging.error(driver.page_source)
-            raise Exception("Login failed!")
+        wait_for_element(driver,By.XPATH,"//*[text()='Dashboard']", 60)
 
         logging.info('Logged in successfully!')
 
