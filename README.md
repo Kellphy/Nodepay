@@ -1,7 +1,16 @@
-# Contact: https://kellphy.com/socials
-https://hub.docker.com/r/kellphy/nodepay
+Contact: https://kellphy.com/socials
 ---
-Use built image:
+## Docker Run
+```
+docker run -d \
+  --name Nodepay \
+  --restart unless-stopped \
+  -e NP_USER=YOUR@EMAIL.COM \
+  -e NP_PASS=YOURPASSWORD \
+  kellphy/nodepay
+```
+## Docker Compose
+Use built image from Docker Hub: https://hub.docker.com/r/kellphy/nodepay
 ```
 services:
   nodepay:
@@ -13,7 +22,7 @@ services:
       - NP_PASS=YOURPASSWORD
 ```
 
-Or, build it yourself:
+Or, build it yourself from GitHub: https://github.com/Kellphy/Nodepay
 ```
 services:
   nodepay:
@@ -27,3 +36,4 @@ services:
       - NP_USER=YOUR@EMAIL.COM
       - NP_PASS=YOURPASSWORD
 ```
+---
