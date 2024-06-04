@@ -6,7 +6,7 @@
 2. Open CMD and use the Docker Run command of the built image from Docker Hub.
 3. Check and Manage at Docker Desktop > Containers.
 # Usage
-#### Replace *YOUR@EMAIL.COM* and *YOURPASSWORD*
+#### Replace `YOUR@EMAIL.COM` and `YOURPASSWORD`
 ## A) Use built image from [Docker Hub](https://hub.docker.com/r/kellphy/nodepay)
 #### Docker Compose
 ```
