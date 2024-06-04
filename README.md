@@ -1,7 +1,13 @@
-## [Contact Me](https://kellphy.com/socials) 
+# [Contact Me](https://kellphy.com/socials) 
 ### But before, check the status of [Nodepay](https://app.nodepay.ai/dashboard)
-## Usage
-### Use built image from [Docker Hub](https://hub.docker.com/r/kellphy/nodepay)
+#### Also, [check out other passive income tools](https://kellphy.com/proxynode) that run with Docker, such as Grass, HoneyGain, Mysterium, and many others!
+# I have never did this before steps:
+1. [Download Docker Desktop](https://www.docker.com/products/docker-desktop).
+2. Open CMD and use the Docker Run command of the built image from Docker Hub.
+3. Check and Manage at Docker Desktop > Containers.
+# Usage
+#### Replace *YOUR@EMAIL.COM* and *YOURPASSWORD*
+## A) Use built image from [Docker Hub](https://hub.docker.com/r/kellphy/nodepay)
 #### Docker Compose
 ```
 services:
@@ -22,7 +28,7 @@ docker run -d \
   -e NP_PASS="YOURPASSWORD" \
   kellphy/nodepay
 ```
-### Build it yourself from [GitHub](https://github.com/Kellphy/Nodepay) 
+## B) Build it yourself from [GitHub](https://github.com/Kellphy/Nodepay) 
 #### Docker Compose
 ```
 services:
@@ -47,7 +53,3 @@ docker run -d \
   -e NP_PASS="YOURPASSWORD" \
   nodepay
 ```
-## I have never did this before steps:
-1. [Download Docker Desktop](https://www.docker.com/products/docker-desktop)
-2. Open CMD and use the Docker Run command of the built image from Docker Hub
-3. Check and Manage at Docker Desktop > Containers
