@@ -1,7 +1,7 @@
 # [Contact Me](https://kellphy.com/socials) 
 ### But before, check the status of [Nodepay](https://app.nodepay.ai/dashboard)
 #### Also, [check out other passive income tools](https://kellphy.com/proxynode) that run with Docker, such as Grass, HoneyGain, Mysterium, and many others!
-# Setup:
+# Setup
 1. [Download Docker Desktop](https://www.docker.com/products/docker-desktop).
 2. Login to [Nodepay](https://app.nodepay.ai/dashboard).
 3. Open `Developer Tools` and go to `Application(Chrome)` / `Storage(Firefox)`.
