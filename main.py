@@ -42,21 +42,24 @@ def wait_for_element(driver, by, value, timeout=10):
         logging.error(f"Error waiting for element {value}: {e}")
         raise
 
+def add_cookie_to_local_storage(driver, cookie_value):
+    driver.execute_script(f"window.localStorage.setItem('np_webapp_token', '{cookie_value}');")
+    driver.execute_script(f"window.localStorage.setItem('np_token', '{cookie_value}');")
+    logging.info(f"Added cookie with value {cookie_value[:8]}... to local storage.")
+
 def run():
     setup_logging()
-    logging.info('Starting the script...')
+    version = '1.0.1'
+    logging.info(f"Starting the script {version}...")
 
     # Read variables from the OS env
-    email = os.getenv('NP_USER')
-    password = os.getenv('NP_PASS')
     extension_id = os.getenv('EXTENSION_ID')
     extension_url = os.getenv('EXTENSION_URL')
-
-    logging.info(f"Using the account of: {email}")
+    cookie = os.getenv('NP_COOKIE')
 
     # Check if credentials are provided
-    if not email or not password:
-        logging.error('No username or password provided. Please set the NP_USER and NP_PASS environment variables.')
+    if not cookie:
+        logging.error('No cookie provided. Please set the NP_COOOKIE environment variable.')
         return  # Exit the script if credentials are not provided
 
     chrome_options = Options()
@@ -76,19 +79,12 @@ def run():
         logging.info(f'Navigating to {extension_url} website...')
         driver.get(extension_url)
 
-        wait_for_element(driver,By.ID,"basic_user")
-        logging.info('Entering credentials...')
-        username = driver.find_element(By.ID,"basic_user")
-        username.send_keys(email)
-        passwd = driver.find_element(By.ID,"basic_password")
-        passwd.send_keys(password)
-        
-        logging.info('Clicking the login button...')
-        submit = driver.find_element(By.XPATH, "//button[@type='submit']")
-        submit.click()
+        add_cookie_to_local_storage(driver, cookie)
         
         # Check successful login
-        wait_for_element(driver,By.XPATH,"//*[text()='Dashboard']", 60)
+        while not wait_for_element_exists(driver,By.XPATH,"//*[text()='Dashboard']"):
+            logging.info('Refreshing page to check login information...')
+            driver.get(extension_url)
 
         logging.info('Logged in successfully!')
 
@@ -100,6 +96,7 @@ def run():
             logging.info('Clicking the extension login button...')
             login = driver.find_element(By.XPATH, "//*[text()='Login']")
             login.click()
+            time.sleep(10)
             # Refresh the page
             driver.refresh()
         
@@ -124,7 +121,7 @@ def run():
         connection_status(driver)
     except Exception as e:
         logging.error(f'An error occurred: {e}')
-        logging.error(f'Restarting in 60 seconds ...')
+        logging.error(f'Restarting in 60 seconds...')
         driver.quit()
         time.sleep(60)
         run()
