@@ -9,8 +9,7 @@
 5. Replace `NP_COOKIE` with the value that you copied.
 6. Open CMD and use the Docker Run command of the built image from Docker Hub.
 7. Check and Manage the app from Docker Desktop > Containers.
-# Usage
-#### Replace `YOUR@EMAIL.COM` and `YOURPASSWORD`
+# Usage Options
 ## A) Use built image from [Docker Hub](https://hub.docker.com/r/kellphy/nodepay)
 #### Docker Compose
 ```
