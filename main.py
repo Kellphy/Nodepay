@@ -49,7 +49,7 @@ def add_cookie_to_local_storage(driver, cookie_value):
 
 def run():
     setup_logging()
-    version = '1.0.2'
+    version = '1.0.2.C'
     logging.info(f"Starting the script {version}...")
 
     # Read variables from the OS env
@@ -65,7 +65,7 @@ def run():
     chrome_options = Options()
     chrome_options.add_extension(f'./{extension_id}.crx')
     chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument('--headless=new')
+    chrome_options.add_argument('--headless')
     chrome_options.add_argument('--disable-dev-shm-usage')
     chrome_options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36 Edg/121.0.0.0")
 
@@ -87,21 +87,6 @@ def run():
             driver.get(extension_url)
 
         logging.info('Logged in successfully!')
-
-        logging.info('Accessing extension settings page...')
-        driver.get(f'chrome-extension://{extension_id}/index.html')
-        
-        # Refresh until the "Login" button disappears
-        while wait_for_element_exists(driver,By.XPATH,"//*[text()='Login']"):
-            logging.info('Clicking the extension login button...')
-            login = driver.find_element(By.XPATH, "//*[text()='Login']")
-            login.click()
-            time.sleep(10)
-            # Refresh the page
-            driver.refresh()
-        
-        # Check for the "Activated" element
-        check_active_element(driver)
 
         # Get handles for all windows
         all_windows = driver.window_handles
