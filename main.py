@@ -49,7 +49,7 @@ def add_cookie_to_local_storage(driver, cookie_value):
 
 def run():
     setup_logging()
-    version = '1.0.2.C'
+    version = '1.0.2.L'
     logging.info(f"Starting the script {version}...")
 
     # Read variables from the OS env
