@@ -45,11 +45,11 @@ def wait_for_element(driver, by, value, timeout=10):
 def add_cookie_to_local_storage(driver, cookie_value):
     driver.execute_script(f"window.localStorage.setItem('np_webapp_token', '{cookie_value}');")
     driver.execute_script(f"window.localStorage.setItem('np_token', '{cookie_value}');")
-    logging.info(f"Added cookie with value {cookie_value[:8]}... to local storage.")
+    logging.info(f"Added cookie with value {cookie_value[:8]}...{cookie_value[-8:]} to local storage.")
 
 def run():
     setup_logging()
-    version = '1.0.1'
+    version = '1.0.2'
     logging.info(f"Starting the script {version}...")
 
     # Read variables from the OS env
