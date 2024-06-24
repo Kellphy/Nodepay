@@ -19,14 +19,6 @@ def connection_status(driver):
     else:
         logging.warning("Status: Unknown!")
 
-def check_active_element(driver):
-    try:
-        wait_for_element(driver,By.XPATH,"//*[text()='Activated']")
-        driver.find_element(By.XPATH, "//*[text()='Activated']")
-        logging.info("Extension is activated!")
-    except NoSuchElementException:
-        logging.error("Failed to find 'Activated' element. Extension activation failed.")
-
 def wait_for_element_exists(driver, by, value, timeout=10):
     try:
         WebDriverWait(driver, timeout).until(EC.presence_of_element_located((by, value)))
@@ -49,7 +41,7 @@ def add_cookie_to_local_storage(driver, cookie_value):
 
 def run():
     setup_logging()
-    version = '1.0.2.L'
+    version = '1.0.3.L'
     logging.info(f"Starting the script {version}...")
 
     # Read variables from the OS env
