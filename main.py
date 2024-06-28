@@ -7,6 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 import logging
+import subprocess
 
 def setup_logging():
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -47,34 +48,53 @@ def add_cookie_to_local_storage(driver, cookie_value):
     driver.execute_script(f"window.localStorage.setItem('np_token', '{cookie_value}');")
     logging.info(f"Added cookie with value {cookie_value[:8]}...{cookie_value[-8:]} to local storage.")
 
+def get_chromedriver_version():
+    try:
+        result = subprocess.run(['chromedriver', '--version'], capture_output=True, text=True)
+        return result.stdout.strip()
+    except Exception as e:
+        logging.error(f"Could not get ChromeDriver version: {e}")
+        return "Unknown version"
+
 def run():
     setup_logging()
-    version = '1.0.2'
+    version = '1.0.5'
+    secUntilRestart = 60
     logging.info(f"Starting the script {version}...")
 
-    # Read variables from the OS env
-    extension_id = os.getenv('EXTENSION_ID')
-    extension_url = os.getenv('EXTENSION_URL')
-    cookie = os.getenv('NP_COOKIE')
+    try:
+        # Read variables from the OS env
+        extension_id = os.getenv('EXTENSION_ID')
+        extension_url = os.getenv('EXTENSION_URL')
+        cookie = os.getenv('NP_COOKIE')
 
-    # Check if credentials are provided
-    if not cookie:
-        logging.error('No cookie provided. Please set the NP_COOOKIE environment variable.')
-        return  # Exit the script if credentials are not provided
+        # Check if credentials are provided
+        if not cookie:
+            logging.error('No cookie provided. Please set the NP_COOOKIE environment variable.')
+            return  # Exit the script if credentials are not provided
 
-    chrome_options = Options()
-    chrome_options.add_extension(f'./{extension_id}.crx')
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument('--headless=new')
-    chrome_options.add_argument('--disable-dev-shm-usage')
-    chrome_options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36 Edg/121.0.0.0")
+        chrome_options = Options()
+        chrome_options.add_extension(f'./{extension_id}.crx')
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--headless=new')
+        chrome_options.add_argument('--disable-dev-shm-usage')
+        chrome_options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36 Edg/121.0.0.0")
 
-    # Initialize the WebDriver
-    driver = webdriver.Chrome(options=chrome_options)
-    # NodePass checks for width less than 1024p
-    driver.set_window_size(1024, driver.get_window_size()['height'])
+        # Initialize the WebDriver
+        chromedriver_version = get_chromedriver_version()
+        logging.info(f'Using {chromedriver_version}')
+        driver = webdriver.Chrome(options=chrome_options)
+        
+    except Exception as e:
+        logging.error(f'An error occurred: {e}')
+        logging.error(f'Restarting in 60 seconds...')
+        time.sleep(secUntilRestart)
+        run()
 
     try:
+        # NodePass checks for width less than 1024p
+        driver.set_window_size(1024, driver.get_window_size()['height'])
+    
         # Navigate to a webpage
         logging.info(f'Navigating to {extension_url} website...')
         driver.get(extension_url)
@@ -123,7 +143,7 @@ def run():
         logging.error(f'An error occurred: {e}')
         logging.error(f'Restarting in 60 seconds...')
         driver.quit()
-        time.sleep(60)
+        time.sleep(secUntilRestart)
         run()
 
     while True:
