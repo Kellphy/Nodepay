@@ -42,11 +42,18 @@ def wait_for_element(driver, by, value, timeout=10):
     except TimeoutException as e:
         logging.error(f"Error waiting for element {value}: {e}")
         raise
+    
+def set_local_storage_item(driver, key, value):
+    driver.execute_script(f"localStorage.setItem('{key}', '{value}');")
+    result = driver.execute_script(f"return localStorage.getItem('{key}');")
+    return result
 
 def add_cookie_to_local_storage(driver, cookie_value):
-    driver.execute_script(f"window.localStorage.setItem('np_webapp_token', '{cookie_value}');")
-    driver.execute_script(f"window.localStorage.setItem('np_token', '{cookie_value}');")
-    logging.info(f"Added cookie with value {cookie_value[:8]}...{cookie_value[-8:]} to local storage.")
+    keys = ['np_webapp_token', 'np_token']
+    
+    for key in keys:
+        result = set_local_storage_item(driver, key, cookie_value)
+        logging.info(f"Added {key} with value {result[:8]}...{result[-8:]} to local storage.")
 
 def get_chromedriver_version():
     try:
@@ -58,7 +65,7 @@ def get_chromedriver_version():
 
 def run():
     setup_logging()
-    version = '1.0.5'
+    version = '1.0.6'
     secUntilRestart = 60
     logging.info(f"Starting the script {version}...")
 
