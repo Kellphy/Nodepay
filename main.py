@@ -65,7 +65,7 @@ def get_chromedriver_version():
 
 def run():
     setup_logging()
-    version = '1.0.6'
+    version = '1.0.7'
     secUntilRestart = 60
     logging.info(f"Starting the script {version}...")
 
