@@ -19,6 +19,7 @@ services:
     container_name: Nodepay
     image: kellphy/nodepay
     restart: unless-stopped
+    pull_policy: always
     environment:
       - NP_COOKIE=YOURCOOKIE
 ```
@@ -27,6 +28,7 @@ services:
 docker run -d \
   --name Nodepay \
   --restart unless-stopped \
+  --pull always \
   -e NP_COOKIE="YOURCOOKIE" \
   kellphy/nodepay
 ```
