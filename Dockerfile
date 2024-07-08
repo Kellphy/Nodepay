@@ -7,7 +7,8 @@ ENV GIT_USERNAME=warren-bank
 ENV GIT_REPO=chrome-extension-downloader
 
 # Install necessary packages then clean up to reduce image size
-RUN apt update && \
+RUN set -e; \
+    apt update && \
     apt upgrade -y && \
     apt install -qqy \
     curl \
@@ -16,7 +17,10 @@ RUN apt update && \
     chromium \
     chromium-driver \
     python3 \
-    python3-selenium && \
+    python3-requests \
+    python3-selenium \
+    coreutils \
+    bash && \
     apt autoremove --purge -y && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*
