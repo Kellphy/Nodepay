@@ -54,6 +54,7 @@ def add_cookie_to_local_storage(driver, cookie_value):
     for key in keys:
         result = set_local_storage_item(driver, key, cookie_value)
         logging.info(f"Added {key} with value {result[:8]}...{result[-8:]} to local storage.")
+    logging.info("Reminder: Token lifetime is 7 days!")
 
 def get_chromedriver_version():
     try:
