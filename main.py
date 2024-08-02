@@ -66,7 +66,7 @@ def get_chromedriver_version():
 
 def run():
     setup_logging()
-    version = '1.0.7'
+    version = '1.0.7L'
     secUntilRestart = 60
     logging.info(f"Starting the script {version}...")
 
@@ -87,6 +87,7 @@ def run():
         chrome_options.add_argument('--headless=new')
         chrome_options.add_argument('--disable-dev-shm-usage')
         chrome_options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36 Edg/121.0.0.0")
+        chrome_options.add_argument("--remote-debugging-port=9222")
 
         # Initialize the WebDriver
         chromedriver_version = get_chromedriver_version()
