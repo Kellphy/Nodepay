@@ -69,7 +69,7 @@ def get_chromedriver_version():
 def run():
     setup_logging()
     
-    version = '1.0.7'
+    version = '1.0.8C'
     secUntilRestart = 60
     logging.info(f"Starting the script {version}...")
 
@@ -161,7 +161,7 @@ def run():
 
     while True:
         try:
-            time.sleep(3600)
+            time.sleep(60)
             driver.refresh()
             connection_status(driver)
         except KeyboardInterrupt:
