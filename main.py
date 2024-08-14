@@ -20,6 +20,7 @@ def connection_status(driver):
         logging.warning("Status: Disonnected!")
     else:
         logging.warning("Status: Unknown!")
+        logging.warning(driver.page_source)
 
 def check_active_element(driver):
     try:
@@ -68,7 +69,7 @@ def get_chromedriver_version():
 def run():
     setup_logging()
 
-    branch = ''
+    branch = 'D'
     version = '1.0.8' + branch
     secUntilRestart = 60
     logging.info(f"Starting the script {version}...")
@@ -161,7 +162,7 @@ def run():
 
     while True:
         try:
-            time.sleep(3600)
+            time.sleep(60)
             driver.refresh()
             connection_status(driver)
         except KeyboardInterrupt:
