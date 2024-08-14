@@ -12,7 +12,7 @@ import logging
 
 def setup_logging():
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    
+
 def connection_status(driver):
     if(wait_for_element_exists(driver,By.XPATH,"//*[text()='Connected']")):
         logging.info("Status: Connected!")
@@ -20,7 +20,6 @@ def connection_status(driver):
         logging.warning("Status: Disonnected!")
     else:
         logging.warning("Status: Unknown!")
-        logging.warning(driver.page_source)
 
 def check_active_element(driver):
     try:
@@ -44,7 +43,7 @@ def wait_for_element(driver, by, value, timeout=10):
     except TimeoutException as e:
         logging.error(f"Error waiting for element {value}: {e}")
         raise
-    
+
 def set_local_storage_item(driver, key, value):
     driver.execute_script(f"localStorage.setItem('{key}', '{value}');")
     result = driver.execute_script(f"return localStorage.getItem('{key}');")
@@ -52,7 +51,7 @@ def set_local_storage_item(driver, key, value):
 
 def add_cookie_to_local_storage(driver, cookie_value):
     keys = ['np_webapp_token', 'np_token']
-    
+
     for key in keys:
         result = set_local_storage_item(driver, key, cookie_value)
         logging.info(f"Added {key} with value {result[:8]}...{result[-8:]} to local storage.")
@@ -68,8 +67,9 @@ def get_chromedriver_version():
 
 def run():
     setup_logging()
-    
-    version = '1.0.8C'
+
+    branch = ''
+    version = '1.0.8' + branch
     secUntilRestart = 60
     logging.info(f"Starting the script {version}...")
 
@@ -104,14 +104,14 @@ def run():
     try:
         # NodePass checks for width less than 1024p
         driver.set_window_size(1024, driver.get_window_size()['height'])
-        
+
         # Navigate to a webpage
         logging.info(f'Navigating to {extension_url} website...')
         driver.get(extension_url)
         time.sleep(random.randint(3,7))
 
         add_cookie_to_local_storage(driver, cookie)
-        
+
         # Check successful login
         while not wait_for_element_exists(driver,By.XPATH,"//*[text()='Dashboard']"):
             logging.info('Refreshing page to check login information...')
@@ -132,7 +132,7 @@ def run():
             time.sleep(10)
             # Refresh the page
             driver.refresh()
-        
+
         # Check for the "Activated" element
         check_active_element(driver)
 
@@ -161,7 +161,7 @@ def run():
 
     while True:
         try:
-            time.sleep(60)
+            time.sleep(3600)
             driver.refresh()
             connection_status(driver)
         except KeyboardInterrupt:
