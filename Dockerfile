@@ -1,4 +1,4 @@
-FROM debian:stable-slim
+FROM debian:11-slim
 
 # Set environment variables
 ENV EXTENSION_ID=lgmpfmgeabnnlemejacfljbmonaomfmm
@@ -16,6 +16,7 @@ RUN apt update && \
     chromium \
     chromium-driver \
     python3 \
+    python3-pip \
     python3-requests \
     python3-selenium \
     coreutils \
@@ -24,14 +25,18 @@ RUN apt update && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Download crx dowloader from git
+# Download crx downloader from git
 RUN git clone "https://github.com/${GIT_USERNAME}/${GIT_REPO}.git" && \
     chmod +x ./${GIT_REPO}/bin/*
 
 # Download the extension selected
 RUN ./${GIT_REPO}/bin/crxdl $EXTENSION_ID
 
-# Install python requirements
+# Install Python packages
+RUN pip3 install distro
+
+# Copy the Python script
 COPY main.py .
-# RUN pip install -r requirements.txt
+
+# Run the Python script
 ENTRYPOINT [ "python3", "main.py" ]
