@@ -87,7 +87,7 @@ def run():
     setup_logging()
     
     branch = ''
-    version = '1.0.8' + branch
+    version = '1.0.9' + branch
     secUntilRestart = 60
     logging.info(f"Started the script {version}")
 
