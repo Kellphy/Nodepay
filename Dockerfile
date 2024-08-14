@@ -7,8 +7,7 @@ ENV GIT_USERNAME=warren-bank
 ENV GIT_REPO=chrome-extension-downloader
 
 # Install necessary packages then clean up to reduce image size
-RUN set -e; \
-    apt update && \
+RUN apt update && \
     apt upgrade -y && \
     apt install -qqy \
     curl \
