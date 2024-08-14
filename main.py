@@ -56,7 +56,7 @@ def add_cookie_to_local_storage(driver, cookie_value):
     for key in keys:
         result = set_local_storage_item(driver, key, cookie_value)
         logging.info(f"Added {key} with value {result[:8]}...{result[-8:]} to local storage.")
-    logging.info("!!!!! The token can be used for 7 days of new logins !!!!!")
+    logging.info("!!!!! Your token can be used to login for 7 days !!!!!")
 
 def get_chromedriver_version():
     try:
