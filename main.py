@@ -55,7 +55,7 @@ def add_cookie_to_local_storage(driver, cookie_value):
     for key in keys:
         result = set_local_storage_item(driver, key, cookie_value)
         logging.info(f"Added {key} with value {result[:8]}...{result[-8:]} to local storage.")
-    logging.info("Reminder: Token lifetime is 7 days!")
+    logging.info("!!! The token can be used for 7 days of new logins !!!")
 
 def get_chromedriver_version():
     try:
@@ -71,7 +71,7 @@ def run():
     branch = 'L'
     version = '1.0.8' + branch
     secUntilRestart = 60
-    logging.info(f"Starting the script {version}...")
+    logging.info(f"Started the script {version}")
 
     try:
         # Read variables from the OS env
@@ -115,7 +115,7 @@ def run():
 
         # Check successful login
         while not wait_for_element_exists(driver,By.XPATH,"//*[text()='Dashboard']"):
-            logging.info('Refreshing page to check login information...')
+            logging.info(f'Refreshing in {secUntilRestart} seconds to check login (If stuck, verify your token)...')
             driver.get(extension_url)
 
         logging.info('Logged in successfully!')
