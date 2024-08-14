@@ -68,7 +68,7 @@ def get_chromedriver_version():
 def run():
     setup_logging()
 
-    branch = ''
+    branch = 'L'
     version = '1.0.8' + branch
     secUntilRestart = 60
     logging.info(f"Starting the script {version}...")
