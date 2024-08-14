@@ -20,6 +20,7 @@ def connection_status(driver):
         logging.warning("Status: Disonnected!")
     else:
         logging.warning("Status: Unknown!")
+        logging.warning(driver.page_source)
 
 def check_active_element(driver):
     try:
