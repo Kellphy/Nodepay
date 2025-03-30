@@ -99,18 +99,35 @@ def run():
         cookie = os.getenv('NP_COOKIE')
         extension_id = os.getenv('EXTENSION_ID')
         extension_url = os.getenv('EXTENSION_URL')
+        git_username = os.getenv('GIT_USERNAME')
+        git_repo = os.getenv('GIT_REPO')
+        extensions_dir = 'extensions'
 
         # Check if credentials are provided
         if not cookie:
             logging.error('No cookie provided. Please set the NP_COOKIE environment variable.')
             return  # Exit the script if credentials are not provided
+        
+        os.makedirs(extensions_dir, exist_ok=True)
+        extension_dir = os.path.join(extensions_dir, extension_id)
+        os.makedirs(extension_dir, exist_ok=True)
+        
+        if os.path.exists(git_repo):
+            subprocess.run(["rm", "-rf", git_repo], check=True)
+        logging.info(f'Using {git_username}/{git_repo} to download the extension CRX file from the Chrome Web Store...')
+        subprocess.run(["git", "clone", f"https://github.com/{git_username}/{git_repo}.git"], check=True)
+        subprocess.run(["chmod", "+x", f"./{git_repo}/crx-dl.py"], check=True)
+        crx_file_path = os.path.join(extension_dir, f"{extension_id}.crx")
+        os.makedirs(extension_dir, exist_ok=True)
+        subprocess.run(["python3", f"./{git_repo}/crx-dl.py", f"-o={crx_file_path}", extension_id], check=True)
 
         chrome_options = Options()
-        chrome_options.add_extension(f'./{extension_id}.crx')
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--headless=new')
         chrome_options.add_argument('--disable-dev-shm-usage')
         chrome_options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36 Edg/121.0.0.0")
+
+        chrome_options.add_extension(crx_file_path)
 
         # Initialize the WebDriver
         chromedriver_version = get_chromedriver_version()

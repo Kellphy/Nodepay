@@ -3,11 +3,12 @@ FROM debian:11-slim
 # Set environment variables
 ENV EXTENSION_ID=lgmpfmgeabnnlemejacfljbmonaomfmm
 ENV EXTENSION_URL='https://app.nodepay.ai/'
-ENV GIT_USERNAME=warren-bank
-ENV GIT_REPO=chrome-extension-downloader
+ENV GIT_USERNAME=sryze
+ENV GIT_REPO=crx-dl
 
 # Install necessary packages then clean up to reduce image size
-RUN apt update && \
+RUN set -e; \
+    apt update && \
     apt upgrade -y && \
     apt install -qqy \
     curl \
@@ -24,13 +25,6 @@ RUN apt update && \
     apt autoremove --purge -y && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*
-
-# Download crx downloader from git
-RUN git clone "https://github.com/${GIT_USERNAME}/${GIT_REPO}.git" && \
-    chmod +x ./${GIT_REPO}/bin/*
-
-# Download the extension selected
-RUN ./${GIT_REPO}/bin/crxdl $EXTENSION_ID
 
 # Install Python packages
 RUN pip3 install distro
