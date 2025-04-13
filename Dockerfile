@@ -1,4 +1,4 @@
-FROM debian:11-slim AS base
+FROM debian:12-slim AS base
 
 # Set environment variables
 ENV EXTENSION_ID=lgmpfmgeabnnlemejacfljbmonaomfmm
@@ -19,14 +19,12 @@ RUN set -e && \
         python3-pip \
         python3-requests \
         python3-selenium \
+        python3-distro \
         coreutils \
         bash && \
     apt-get autoremove --purge -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-
-# Install Python packages
-RUN pip3 install distro
 
 # Copy the Python script
 FROM base
