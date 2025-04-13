@@ -126,6 +126,9 @@ def run():
         chrome_options.add_argument('--headless=new')
         chrome_options.add_argument('--disable-dev-shm-usage')
         chrome_options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36 Edg/121.0.0.0")
+        if os.getenv('PROXY'):
+            proxy="127.0.0.1:8080"
+            chrome_options.add_argument(f"--proxy-server={proxy}")
 
         chrome_options.add_extension(crx_file_path)
 

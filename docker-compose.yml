@@ -1,0 +1,25 @@
+name: nodepay
+
+x-nodepay: &nodepay_proxy
+  image: kellphy/nodepay
+  restart: unless-stopped
+
+  deploy:
+    resources:
+      limits:
+        memory: 512M
+        cpus: '1'
+
+services:
+  nodepay1_1:
+    container_name: nodepay1_1
+    <<: *nodepay_proxy
+    environment:
+      PROXY_URL:
+      NP_COOKIE:
+  nodepay1_2:
+    container_name: nodepay1_2
+    <<: *nodepay_proxy
+    environment:
+      PROXY_URL:
+      NP_COOKIE:

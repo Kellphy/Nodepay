@@ -1,4 +1,4 @@
-FROM debian:12-slim
+FROM debian:12-slim AS base
 
 # Set environment variables
 ENV EXTENSION_ID=lgmpfmgeabnnlemejacfljbmonaomfmm
@@ -27,7 +27,12 @@ RUN set -e && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy the Python script
+FROM base
 COPY main.py .
+COPY start.sh .
+
+# proxy tunnel https://github.com/ginuerzh/gost
+COPY --from=ginuerzh/gost /bin/gost /bin
 
 # Run the Python script
-ENTRYPOINT [ "python3", "main.py" ]
+ENTRYPOINT [ "bash", "start.sh" ]
