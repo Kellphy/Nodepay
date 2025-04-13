@@ -86,8 +86,7 @@ def get_os_info():
 def run():
     setup_logging()
     
-    branch = ''
-    version = '1.0.10' + branch
+    version = '1.0.11 (+proxy)'
     secUntilRestart = 60
     logging.info(f"Started the script {version}")
 
