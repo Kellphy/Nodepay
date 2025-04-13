@@ -25,6 +25,7 @@ services:
     pull_policy: always
     environment:
       - NP_COOKIE=YOURCOOKIE
+      - PROXY_URL=socks5://USER:PASSWORD@IP:PORT
 ```
 #### Docker Run
 ```
@@ -33,6 +34,7 @@ docker run -d \
   --restart unless-stopped \
   --pull always \
   -e NP_COOKIE="YOURCOOKIE" \
+  -e PROXY_URL="socks5://USER:PASSWORD@IP:PORT" \
   kellphy/nodepay
 ```
 ## B) Build it yourself from [GitHub](https://github.com/Kellphy/Nodepay) 
@@ -48,6 +50,7 @@ services:
       dockerfile: Dockerfile
     environment:
       - NP_COOKIE=YOURCOOKIE
+      - PROXY_URL=socks5://USER:PASSWORD@IP:PORT
 ```
 #### Docker Run
 ```
@@ -56,5 +59,6 @@ docker run -d \
   --name Nodepay \
   --restart unless-stopped \
   -e NP_COOKIE="YOURCOOKIE" \
+  -e PROXY_URL="socks5://USER:PASSWORD@IP:PORT" \
   nodepay
 ```

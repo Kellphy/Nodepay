@@ -1,4 +1,4 @@
-FROM debian:11-slim
+FROM debian:11-slim AS base
 
 # Set environment variables
 ENV EXTENSION_ID=lgmpfmgeabnnlemejacfljbmonaomfmm
@@ -29,7 +29,12 @@ RUN set -e && \
 RUN pip3 install distro
 
 # Copy the Python script
+FROM base
 COPY main.py .
+COPY start.sh .
+
+# proxy tunnel https://github.com/ginuerzh/gost
+COPY --from=ginuerzh/gost /bin/gost /bin
 
 # Run the Python script
-ENTRYPOINT [ "python3", "main.py" ]
+ENTRYPOINT [ "bash", "start.sh" ]
