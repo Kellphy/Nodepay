@@ -30,6 +30,7 @@ RUN set -e && \
 FROM base
 COPY main.py .
 COPY start.sh .
+COPY crx-dl ./crx-dl
 
 # proxy tunnel https://github.com/ginuerzh/gost
 COPY --from=ginuerzh/gost /bin/gost /bin
