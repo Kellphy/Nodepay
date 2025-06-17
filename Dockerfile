@@ -3,7 +3,7 @@ FROM debian:12-slim AS base
 # Set environment variables
 ENV EXTENSION_ID=lgmpfmgeabnnlemejacfljbmonaomfmm
 ENV EXTENSION_URL='https://app.nodepay.ai/'
-ENV GIT_USERNAME=sryze
+ENV GIT_USERNAME=kellphy
 ENV GIT_REPO=crx-dl
 
 RUN set -e && \
@@ -30,7 +30,6 @@ RUN set -e && \
 FROM base
 COPY main.py .
 COPY start.sh .
-COPY crx-dl ./crx-dl
 
 # proxy tunnel https://github.com/ginuerzh/gost
 COPY --from=ginuerzh/gost /bin/gost /bin

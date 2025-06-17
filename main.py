@@ -86,7 +86,7 @@ def get_os_info():
 def run():
     setup_logging()
     
-    version = '1.0.12 (+proxy)'
+    version = '1.0.13 (+proxy)'
     secUntilRestart = 60
     logging.info(f"Started the script {version}")
 
@@ -111,10 +111,10 @@ def run():
         extension_dir = os.path.join(extensions_dir, extension_id)
         os.makedirs(extension_dir, exist_ok=True)
         
-        # if os.path.exists(git_repo):
-        #     subprocess.run(["rm", "-rf", git_repo], check=True)
+        if os.path.exists(git_repo):
+            subprocess.run(["rm", "-rf", git_repo], check=True)
         logging.info(f'Using {git_username}/{git_repo} to download the extension CRX file from the Chrome Web Store...')
-        # subprocess.run(["git", "clone", f"https://github.com/{git_username}/{git_repo}.git"], check=True)
+        subprocess.run(["git", "clone", f"https://github.com/{git_username}/{git_repo}.git"], check=True)
         subprocess.run(["chmod", "+x", f"./{git_repo}/crx-dl.py"], check=True)
         crx_file_path = os.path.join(extension_dir, f"{extension_id}.crx")
         os.makedirs(extension_dir, exist_ok=True)
