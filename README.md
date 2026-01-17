@@ -1,3 +1,6 @@
+# Looks like Nodepay migrated to some V2 and nothing they do makes any sense.
+# Is this even bandwidth sharing anymore or is it just them asking and paying people for surveys?
+# Anyway ... archived for reference :) Check Grass, that looks cool :)
 # [Check out other passive income tools](https://kellphy.com/proxynode) that run with Docker!
 Ex: **Grass, HoneyGain, Mysterium, PawnsApp, PacketStream, BitPing, EarnApp, EarnFM, Repocket, TraffMonetizer, SpeedShare, ProxyRack, ProxyLite, PacketShare** etc.
 
